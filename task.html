@@ -43,6 +43,7 @@
         }
     );
 
+
     var TRIAL_N = 1;
     var SELECTED_CONDITION = jsPsych.data.getURLVariable('condition'); // get condition from url 
     var RANDOM_LIST = `list${jsPsych.randomization.randomInt(1,3)}`; // get random list 
@@ -270,7 +271,7 @@
         //consent,
         welcome, 
         exposure,
-        get_test("RATING"),
+        get_test(SELECTED_CONDITION),
         thanks
     ]
 
