@@ -19,7 +19,12 @@ var PARAMS = {
       "video/Pingu_Block3.mp4"
     ],
     images: [
-      "images/pingu-still-wave.png"
+      "images/pingu-still-wave.png",
+      "images/pingu-purple-talking.png",
+      "images/pingu-listening.png",
+      "images/pingu-blue-talking.png",
+      "images/pingu-blue-purple.png",
+      "images/pingu-blank.png"
     ]
   }, 
   conditions : {
