@@ -19,7 +19,12 @@ var PARAMS = {
       "video/Pingu_Block3.mp4"
     ],
     images: [
-      "images/pingu-still-wave.png"
+      "images/pingu-still-wave.png",
+      "images/pingu-blank.png",
+      "images/pingu-listening.png",
+      "images/pingu-option-blue.png",
+      "images/pingu-option-both.png", 
+      "images/pingu-option-purple.png"
     ]
   }, 
   conditions : {
@@ -46,8 +51,8 @@ var PARAMS = {
       instructions: "Rating instructions here.",
       test: {
         list1: [
-          {sound1: "sounds/bikuti-resampled.wav"}, 
-          {sound1: "sounds/daropi-resampled.wav"},
+          {sound1: "sounds/bikuti-resampled.wav", category1: "W"}, 
+          {sound1: "sounds/daropi-resampled.wav", category1: "PW"},
           {sound1: "sounds/budopa-resampled.wav"}, 
           {sound1: "sounds/golatu-resampled.wav"}
         ],

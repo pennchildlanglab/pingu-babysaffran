@@ -81,7 +81,7 @@
             <p>Today we are going to watch some fun videos and play a game. In the videos, you are going to see Pingu, the little penguin, talking to her family
                 and friends in the penguin language. Watch as Pingu goes about her day and listen carefully to the penguin language.</p>
             </div>`},
-        prompt: "<p><strong>Click Continue to start watching the video.</strong></p>",
+        prompt: "<p></p>",
         choices: ["Continue"],
         button_html: function(){
             return [`<button class="jspsych-btn">%choice%</button>`]
@@ -108,17 +108,26 @@
         },
     };
 
+    var fixation = {
+        type: jsPsychHtmlKeyboardResponse, 
+        stimulus: "+", 
+        choices: "NO_KEYS", 
+        response_ends_trial: false, 
+        trial_duration: 1000
+    };
+
     var test_rating = {
-        timeline: [{
-            type: jsPsychAudioSliderResponse,
-            stimulus: jsPsych.timelineVariable('sound1'),
-            labels: ['Definitely Not a Word', 'Maybe a Word', 'Definitely a Word'],
-            prompt: '<p>Is this a word in the language you just heard?</p>',
-            response_allowed_while_playing: false,
-            require_movement: true,
-            post_trial_gap:2000
-            
-        }], 
+        timeline: [
+            {
+                type: jsPsychAudioSliderResponse,
+                stimulus: jsPsych.timelineVariable('sound1'),
+                labels: ['Definitely Not a Word', 'Maybe a Word', 'Definitely a Word'],
+                prompt: '<img src="images/pingu-option-blue.png" width="400"><p></p>',
+                response_allowed_while_playing: false,
+                require_movement: true
+            }, 
+            fixation
+        ], 
         timeline_variables: PARAMS.conditions.RATING.test[RANDOM_LIST],
         repetitions: 1
     }
@@ -126,23 +135,56 @@
     var test_afc = {
         timeline: [
             {
+                type: jsPsychHtmlButtonResponse,
+                stimulus: "",
+                prompt: '<p>Which option sounds more like a word in the penguin language?</p>',
+                response_allowed_while_playing: false,
+                choices: ["images/pingu-blank.png", "images/pingu-blank.png"],
+                button_html: [
+                    `<button class="jspsych-btn" style="opacity: 0.2"> <img src=%choice% width="600"></button>`, 
+                    `<button class="jspsych-btn" style="opacity: 0.2"> <img src=%choice% width="600"></button>`
+                ], 
+                trial_duration: 1000,
+                trial_ends_after_audio: true,
+            }, 
+            {
                 type: jsPsychAudioButtonResponse,
                 stimulus: jsPsych.timelineVariable('sound1'),
-                prompt: '<p>Which option sounds more like a word?</p>',
+                prompt: '<p>Which option sounds more like a word in the penguin language?</p>',
                 response_allowed_while_playing: false,
-                choices: ["1", "2"],
+                choices: ["images/pingu-option-blue.png", "images/pingu-blank.png"],
+                button_html: [
+                    `<button class="jspsych-btn"> <img src=%choice% width="600"></button>`, 
+                    `<button class="jspsych-btn" style="opacity: 0.2"> <img src=%choice% width="600"></button>`
+                ], 
                 trial_ends_after_audio: true, 
             }, 
             {
                 type: jsPsychAudioButtonResponse,
                 stimulus: jsPsych.timelineVariable('sound2'),
-                prompt: '<p>Which option sounds more like a word?</p>',
+                prompt: '<p>Which option sounds more like a word in the penguin language?</p>',
                 response_allowed_while_playing: false,
-                choices: ["1", "2"],
-                trial_ends_after_audio: false,
-                post_trial_gap:2000,
+                choices: ["images/pingu-option-blue.png", "images/pingu-option-purple.png"],
+                button_html: [
+                    `<button class="jspsych-btn" style="opacity: 0.2"> <img src=%choice% width="600"></button>`, 
+                    `<button class="jspsych-btn"> <img src=%choice% width="600"></button>`
+                ], 
+                trial_ends_after_audio: true
 
-            }
+            }, 
+            {
+                type: jsPsychHtmlButtonResponse,
+                stimulus: "",
+                prompt: '<p>Which option sounds more like a word in the penguin language?</p>',
+                choices: ["images/pingu-option-blue.png", "images/pingu-option-purple.png"],
+                button_html: [
+                    `<button class="jspsych-btn" > <img src=%choice% width="600"></button>`, 
+                    `<button class="jspsych-btn" > <img src=%choice% width="600"></button>`
+                ], 
+                response_ends_trial: true
+            }, 
+
+            fixation
         ], 
         timeline_variables: PARAMS.conditions.AFC.test[RANDOM_LIST],
         repetitions: 1
@@ -151,30 +193,40 @@
     var test_sicr = {
         timeline: [
             {
+                type: jsPsychHtmlKeyboardResponse,
+                stimulus: "",
+                prompt: '<img src="images/pingu-blank.png" width="600">',
+                choices: "NO_KEYS",          
+                trial_duration: 1000, 
+                post_trial_gap: 0
+            },
+            {
                 type: jsPsychAudioKeyboardResponse,
                 stimulus: jsPsych.timelineVariable('sound1'),
-                prompt: '<p style="color: red;">Listen.</p>',
+                prompt: '<img src="images/pingu-option-blue.png" width="600">',
                 response_allowed_while_playing: false,
                 choices: "NO_KEYS",
-                trial_ends_after_audio: true
+                trial_ends_after_audio: true, 
+                post_trial_gap: 0
             },
             {
                 type: jsPsychAudioKeyboardResponse,
                 stimulus: jsPsych.timelineVariable('sound2'),
-                prompt: '<p style="color: red;">Listen.</p>',
+                prompt: '<img src="images/pingu-option-blue.png" width="600">',
                 response_allowed_while_playing: false,
                 choices: "NO_KEYS",
-                trial_ends_after_audio: true
+                trial_ends_after_audio: true, 
+                post_trial_gap: 0
             },          
             {
                 type: jsPsychHtmlKeyboardResponse,
                 stimulus: "",
-                prompt: '<p style="color: black;">Repeat.</p>',
+                prompt: '<img src="images/pingu-listening.png" width="600">',
                 choices: "NO_KEYS",          
-                trial_duration: 3500,
-                post_trial_gap:2000,
-
-            }
+                trial_duration: 3500, 
+                post_trial_gap: 0
+            },
+            fixation
         ], 
         timeline_variables: PARAMS.conditions.SICR.test[RANDOM_LIST],
         repetitions: 1
@@ -200,13 +252,9 @@
             }, 
             { // take a break after each exposure set 
                 type: jsPsychHtmlButtonResponse,
-                stimulus: function(){
-                    return `<img src=images/pingu-still-wave.png width=600px></img><p style="font-family: monospace"><strong>Great Job! Take a break!</strong></p>`
-                    return `<p style="font-family: monospace"><strong>Great Job! Take a break!</strong></p>`
-
-                },
-                prompt: "Press Continue when you are ready to keep going",
-                choices: ["Continue"],
+                stimulus: "",
+                prompt: "What was pingu doing in the video you watched?",
+                choices: ["Picture 1", "Picture 2"],
                 button_html: [`<button class="jspsych-btn">%choice%</button>`],
                 post_trial_gap: 1000,
 
@@ -244,11 +292,11 @@
     }
 
     var timeline = [
-        consent,
-        browser_check,
-        preload,
+       // consent,
+       // browser_check,
+       preload,
         instructions, 
-        exposure,
+       // exposure,
         get_test(CONDITION),
         thanks
     ]
