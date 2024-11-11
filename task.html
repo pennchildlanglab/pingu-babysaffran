@@ -6,6 +6,7 @@
     <script src="https://unpkg.com/jspsych@7.3.4"></script>
     <script src="https://unpkg.com/@jspsych/plugin-external-html@1.1.3"></script>
     <script src="https://unpkg.com/@jspsych/plugin-audio-slider-response@1.1.3"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-html-slider-response@1.1.3"></script>
     <script src="https://unpkg.com/@jspsych/plugin-audio-keyboard-response@1.1.3"></script>
     <script src="https://unpkg.com/@jspsych/plugin-html-audio-response@1.0.3"></script>
     <script src="https://unpkg.com/@jspsych/plugin-html-keyboard-response@1.1.3"></script>
@@ -118,15 +119,36 @@
 
     var test_rating = {
         timeline: [
+        {
+                type: jsPsychAudioSliderResponse,
+                stimulus: "sounds/silence.wav",
+                labels: ['Definitely Not a Word', 'Definitely a Word'],
+                on_load: function(){
+                    let display_element = document.querySelector('#jspsych-content');
+                    let image = document.createElement('img');
+                    image.src = "images/pingu-wait.png";  // Replace with your actual image URL
+                    image.style.width = '450px';
+                    display_element.prepend(image);
+                },
+                response_ends_trial: false,
+                response_allowed_while_playing: false,
+                trial_duration: 1000
+
+            }, 
             {
                 type: jsPsychAudioSliderResponse,
                 stimulus: jsPsych.timelineVariable('sound1'),
-                labels: ['Definitely Not a Word', 'Maybe a Word', 'Definitely a Word'],
-                prompt: '<img src="images/pingu-option-blue.png" width="400"><p></p>',
+                labels: ['Definitely Not a Word', 'Definitely a Word'],
+                on_load: function(){
+                    let display_element = document.querySelector('#jspsych-content');
+                    let image = document.createElement('img');
+                    image.src = "images/pingu-option-blue.png";  // Replace with your actual image URL
+                    image.style.width = '450px';
+                    display_element.prepend(image);
+                },
                 response_allowed_while_playing: false,
                 require_movement: true
-            }, 
-            fixation
+            }
         ], 
         timeline_variables: PARAMS.conditions.RATING.test[RANDOM_LIST],
         repetitions: 1
@@ -139,7 +161,7 @@
                 stimulus: "",
                 prompt: '<p>Which option sounds more like a word in the penguin language?</p>',
                 response_allowed_while_playing: false,
-                choices: ["images/pingu-blank.png", "images/pingu-blank.png"],
+                choices: ["images/pingu-wait.png", "images/pingu-wait.png"],
                 button_html: [
                     `<button class="jspsych-btn" style="opacity: 0.2"> <img src=%choice% width="600"></button>`, 
                     `<button class="jspsych-btn" style="opacity: 0.2"> <img src=%choice% width="600"></button>`
@@ -152,7 +174,7 @@
                 stimulus: jsPsych.timelineVariable('sound1'),
                 prompt: '<p>Which option sounds more like a word in the penguin language?</p>',
                 response_allowed_while_playing: false,
-                choices: ["images/pingu-option-blue.png", "images/pingu-blank.png"],
+                choices: ["images/pingu-option-blue.png", "images/pingu-wait.png"],
                 button_html: [
                     `<button class="jspsych-btn"> <img src=%choice% width="600"></button>`, 
                     `<button class="jspsych-btn" style="opacity: 0.2"> <img src=%choice% width="600"></button>`
@@ -195,7 +217,7 @@
             {
                 type: jsPsychHtmlKeyboardResponse,
                 stimulus: "",
-                prompt: '<img src="images/pingu-blank.png" width="600">',
+                prompt: '<img src="images/pingu-wait.png" width="600">',
                 choices: "NO_KEYS",          
                 trial_duration: 1000, 
                 post_trial_gap: 0
@@ -221,7 +243,7 @@
             {
                 type: jsPsychHtmlKeyboardResponse,
                 stimulus: "",
-                prompt: '<img src="images/pingu-listening.png" width="600">',
+                prompt: '<img src="images/pingu-listens.png" width="600">',
                 choices: "NO_KEYS",          
                 trial_duration: 3500, 
                 post_trial_gap: 0
@@ -269,6 +291,17 @@
         randomize_order: false
     }
 
+    var exit_survey = {
+        type: jsPsychHtmlSliderResponse,
+        prompt: `
+            <p>Please answer honestly. Your compensation will NOT be affected by your answer.</p>`,
+        stimulus: `
+            <h3>Exit survey</h3>
+            <p>How engaged were you in the task?</p>`,
+        require_movement: true,
+        labels: ['I was very distracted', 'I paid close attention the whole time']
+    };
+
     var preload = {
         type: jsPsychPreload,
         audio: PARAMS.preload.audio,
@@ -294,10 +327,11 @@
     var timeline = [
        // consent,
        // browser_check,
-       // preload,
+       preload,
         instructions, 
        // exposure,
         get_test(CONDITION),
+        exit_survey,
         thanks
     ]
 

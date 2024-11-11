@@ -11,7 +11,8 @@ var PARAMS = {
       "sounds/tibudo-resampled.wav",
       "sounds/tigobu-resampled.wav",
       "sounds/tudaro-resampled.wav",
-      "sounds/exposure_1min30sec.wav"
+      "sounds/exposure_1min30sec.wav", 
+      "sounds/silence.wav"
     ], 
     videos: [
       "video/Pingu_Block1.mp4",
@@ -19,9 +20,8 @@ var PARAMS = {
       "video/Pingu_Block3.mp4"
     ],
     images: [
-      "images/pingu-still-wave.png",
-      "images/pingu-blank.png",
-      "images/pingu-listening.png",
+      "images/pingu-wait.png", 
+      "images/pingu-listens.png",
       "images/pingu-option-blue.png",
       "images/pingu-option-both.png", 
       "images/pingu-option-purple.png"
