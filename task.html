@@ -44,6 +44,7 @@
     var TRIAL_N = 1;
     var URL_CONDITION = jsPsych.data.getURLVariable('condition'); // get condition from url \
     var CONDITION = get_condition(URL_CONDITION);
+    var CONDITION_PARAMS = get_params(CONDITION); 
     var RANDOM_LIST = `list${jsPsych.randomization.randomInt(1,2)}`; // get random list 
     var ALERT = "If you wish to participate, you must check the box next to the statement 'I agree to participate in this study.'"
     
@@ -74,21 +75,31 @@
         } else {
             return condition
         }
-    }
-    var instructions = {
-        type: jsPsychHtmlButtonResponse,
-        stimulus: function() {
-            return `<div style="max-width: 800px; text-align: left">
-            <p>Today we are going to watch some fun videos and play a game. In the videos, you are going to see Pingu, the little penguin, talking to her family
-                and friends in the penguin language. Watch as Pingu goes about her day and listen carefully to the penguin language.</p>
-            </div>`},
-        prompt: "<p></p>",
-        choices: ["Continue"],
-        button_html: function(){
-            return [`<button class="jspsych-btn">%choice%</button>`]
-
-        }
     };
+
+    function get_params(condition){
+        console.log(PARAMS.conditions)
+        console.log(PARAMS.conditions[condition])
+        return PARAMS.conditions[condition]; 
+
+    }
+
+    var get_instructions = function(these_instructions) {
+        console.log(these_instructions)
+        var instructions = {
+            type: jsPsychHtmlButtonResponse,
+            stimulus: function() {
+                return `<div style="max-width: 800px; text-align: left"><p>${these_instructions}</p></div>`},
+            prompt: "<p></p>",
+            choices: ["Continue"],
+            button_html: function(){
+                return [`<button class="jspsych-btn" style="background-color: lightgreen">%choice%</button>`]
+            }
+        }
+
+        return instructions
+        
+    }; 
 
     var thanks = {
         type: jsPsychHtmlButtonResponse,
@@ -265,7 +276,7 @@
                     <source src=${jsPsych.timelineVariable('video')} type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
-                <p>Listen carefully. Press space whenever you hear a beep.</p>`
+                <p></p>`
                 },
                 choices: " ",
                 response_ends_trial: false,
@@ -276,16 +287,23 @@
                 type: jsPsychHtmlButtonResponse,
                 stimulus: "",
                 prompt: "What was pingu doing in the video you watched?",
-                choices: ["Picture 1", "Picture 2"],
-                button_html: [`<button class="jspsych-btn">%choice%</button>`],
+                choices: function() {
+                    let choices = [jsPsych.timelineVariable('correct'), jsPsych.timelineVariable('foil')]; 
+                    let shuffled_choices = jsPsych.randomization.shuffle(choices); 
+                    return shuffled_choices; 
+                }, 
+                button_html: [
+                    `<button class="jspsych-btn"> <img src=%choice% width="400"></button>`, 
+                    `<button class="jspsych-btn"> <img src=%choice% width="400"></button>`
+                ], 
                 post_trial_gap: 1000,
 
             }
         ],
         timeline_variables: [
-            {sound: 'sounds/exposure_1min30sec.wav', video: 'video/Pingu_Block1.mp4'},
-            {sound: 'sounds/exposure_1min30sec.wav', video: 'video/Pingu_Block2.mp4'},
-            {sound: 'sounds/exposure_1min30sec.wav', video: 'video/Pingu_Block3.mp4'}
+            {sound: 'sounds/block-1-stim.mp3', video: 'video/Pingu_Block1.mp4', correct: "images/block-1-comp-c.png", foil: "images/block-1-comp-f.png"},
+            {sound: 'sounds/block-2-stim.mp3', video: 'video/Pingu_Block2.mp4', correct: "images/block-2-comp-c.png", foil: "images/block-2-comp-f.png"},
+            {sound: 'sounds/block-3-stim.mp3', video: 'video/Pingu_Block3.mp4', correct: "images/block-3-comp-c.png", foil: "images/block-3-comp-f.png"}
         ],
         repetitions: 1,     
         randomize_order: false
@@ -327,9 +345,12 @@
     var timeline = [
        // consent,
        // browser_check,
-       preload,
-        instructions, 
-       // exposure,
+        preload,
+        get_instructions(CONDITION_PARAMS.instructions.exposure), 
+        exposure,
+        get_instructions(CONDITION_PARAMS.instructions.practice),
+        get_test(CONDITION),
+        get_instructions(CONDITION_PARAMS.instructions.test),
         get_test(CONDITION),
         exit_survey,
         thanks
