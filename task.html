@@ -133,7 +133,7 @@
         {
                 type: jsPsychAudioSliderResponse,
                 stimulus: "sounds/silence.wav",
-                labels: ['Definitely Not a Word', 'Definitely a Word'],
+                labels: ['Not at all like a penguin word', 'Definitely a penguin word'],
                 on_load: function(){
                     let display_element = document.querySelector('#jspsych-content');
                     let image = document.createElement('img');
@@ -149,7 +149,7 @@
             {
                 type: jsPsychAudioSliderResponse,
                 stimulus: jsPsych.timelineVariable('sound1'),
-                labels: ['Definitely Not a Word', 'Definitely a Word'],
+                labels: ['Not at all like a penguin word', 'Definitely a penguin word'],
                 on_load: function(){
                     let display_element = document.querySelector('#jspsych-content');
                     let image = document.createElement('img');
