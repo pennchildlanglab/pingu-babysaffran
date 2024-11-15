@@ -93,7 +93,7 @@
             prompt: "<p></p>",
             choices: ["Continue"],
             button_html: function(){
-                return [`<button class="jspsych-btn" style="background-color: lightgreen">%choice%</button>`]
+                return [`<button class="jspsych-btn">%choice%</button>`]
             }
         }
 
@@ -148,7 +148,10 @@
             }, 
             {
                 type: jsPsychAudioSliderResponse,
-                stimulus: jsPsych.timelineVariable('sound1'),
+                stimulus: function(){
+                    let sound = `sounds/${jsPsych.timelineVariable('sound1')}-resampled.wav`
+                    return sound
+                },
                 labels: ['Not at all like a penguin word', 'Definitely a penguin word'],
                 on_load: function(){
                     let display_element = document.querySelector('#jspsych-content');
@@ -182,7 +185,10 @@
             }, 
             {
                 type: jsPsychAudioButtonResponse,
-                stimulus: jsPsych.timelineVariable('sound1'),
+                stimulus: function(){
+                    let sound = `sounds/${jsPsych.timelineVariable('sound1')}-resampled.wav`
+                    return sound
+                },
                 prompt: '<p>Which option sounds more like a word in the penguin language?</p>',
                 response_allowed_while_playing: false,
                 choices: ["images/pingu-option-blue.png", "images/pingu-wait.png"],
@@ -194,7 +200,10 @@
             }, 
             {
                 type: jsPsychAudioButtonResponse,
-                stimulus: jsPsych.timelineVariable('sound2'),
+                stimulus: function(){
+                    let sound = `sounds/${jsPsych.timelineVariable('sound2')}-resampled.wav`
+                    return sound
+                },
                 prompt: '<p>Which option sounds more like a word in the penguin language?</p>',
                 response_allowed_while_playing: false,
                 choices: ["images/pingu-option-blue.png", "images/pingu-option-purple.png"],
@@ -228,35 +237,43 @@
             {
                 type: jsPsychHtmlKeyboardResponse,
                 stimulus: "",
-                prompt: '<img src="images/pingu-wait.png" width="600">',
+                prompt: '<img src="images/pingu-wait.png" width="600"><br><button class="jspsych-btn" disabled>Next</button>',
                 choices: "NO_KEYS",          
                 trial_duration: 1000, 
                 post_trial_gap: 0
             },
             {
                 type: jsPsychAudioKeyboardResponse,
-                stimulus: jsPsych.timelineVariable('sound1'),
-                prompt: '<img src="images/pingu-option-blue.png" width="600">',
-                response_allowed_while_playing: false,
+                stimulus: function(){
+                    let sound = `sounds/${jsPsych.timelineVariable('sound1')}-resampled.wav`
+                    return sound
+                },
+                prompt: function(){
+                    return '<img src="images/pingu-option-blue.png" width="600"><br><button class="jspsych-btn" disabled>Next</button>'
+                },
                 choices: "NO_KEYS",
+                response_allowed_while_playing: false,
                 trial_ends_after_audio: true, 
                 post_trial_gap: 0
             },
             {
                 type: jsPsychAudioKeyboardResponse,
-                stimulus: jsPsych.timelineVariable('sound2'),
-                prompt: '<img src="images/pingu-option-blue.png" width="600">',
+                stimulus: function(){
+                    let sound = `sounds/${jsPsych.timelineVariable('sound2')}-resampled.wav`
+                    return sound
+                },
+                prompt: '<img src="images/pingu-option-blue.png" width="600"><br><button class="jspsych-btn" disabled>Next</button>',
                 response_allowed_while_playing: false,
                 choices: "NO_KEYS",
                 trial_ends_after_audio: true, 
                 post_trial_gap: 0
             },          
             {
-                type: jsPsychHtmlKeyboardResponse,
-                stimulus: "",
-                prompt: '<img src="images/pingu-listens.png" width="600">',
-                choices: "NO_KEYS",          
-                trial_duration: 3500, 
+                type: jsPsychHtmlButtonResponse,
+                stimulus: `<img src="images/pingu-listens.png" width="600">`,
+                prompt: '',
+                choices: ["Next"],          
+                response_ends_trial: true,
                 post_trial_gap: 0
             },
             fixation
@@ -343,13 +360,11 @@
     }
 
     var timeline = [
-       // consent,
+       consent,
        // browser_check,
         preload,
         get_instructions(CONDITION_PARAMS.instructions.exposure), 
-        // exposure,
-        get_instructions(CONDITION_PARAMS.instructions.practice),
-        get_test(CONDITION),
+        exposure,
         get_instructions(CONDITION_PARAMS.instructions.test),
         get_test(CONDITION),
         exit_survey,
