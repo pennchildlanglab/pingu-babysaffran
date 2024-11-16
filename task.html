@@ -352,7 +352,7 @@
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({
                             base64Data: data.response,
-                            fileName: 'example-katie-now.webm',
+                            fileName: `recording_trial_n_${TRIAL_N}`,
                             mimeType: 'audio/webm',
                         }),
                     })
