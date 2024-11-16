@@ -347,18 +347,19 @@
                     jsPsych.setProgressBar(proportion_complete += 0.01);
 
                     // also upload the recording to our s3 bucket!
-                    fetch('https://api.childlanglab.com/v1/upload', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            base64Data: data.response,
-                            fileName: `recording_trial_n_${TRIAL_N}`,
-                            mimeType: 'audio/webm',
-                        }),
-                    })
-                    .then(response => response.json())
-                    .then(data => console.log(data))
-                    .catch(error => console.error(error))                 
+                    childlanglabClient.uploadRecording(TRIAL_N)
+                    // fetch('https://api.childlanglab.com/v1/upload', {
+                    //     method: 'POST',
+                    //     headers: { 'Content-Type': 'application/json' },
+                    //     body: JSON.stringify({
+                    //         base64Data: data.response,
+                    //         fileName: `recording_trial_n_${TRIAL_N}`,
+                    //         mimeType: 'audio/webm',
+                    //     }),
+                    // })
+                    // .then(response => response.json())
+                    // .then(data => console.log(data))
+                    // .catch(error => console.error(error))                 
 
                 },
                 data: {
