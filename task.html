@@ -344,21 +344,22 @@
 
                     // update progress bar
                     let proportion_complete = jsPsych.getProgressBarCompleted();
-                    jsPsych.setProgressBar(proportion_complete += 0.01)
+                    jsPsych.setProgressBar(proportion_complete += 0.01);
 
                     // also upload the recording to our s3 bucket!
-?                    fetch('https://api.childlanglab.com/v1/upload', {
+                    fetch('https://api.childlanglab.com/v1/upload', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({
                             base64Data: data.response,
                             fileName: 'example-katie-now.webm',
-                            mimeType: 'audio/webm'
-                        })
+                            mimeType: 'audio/webm',
+                        }),
                     })
                     .then(response => response.json())
                     .then(data => console.log(data))
-                    .catch(error => console.error(error));
+                    .catch(error => console.error(error))                 
+
                 },
                 data: {
                     sound1: jsPsych.timelineVariable('sound1'),
