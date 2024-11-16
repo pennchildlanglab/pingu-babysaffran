@@ -342,6 +342,23 @@
                     data.random_list = RANDOM_LIST;
                     let proportion_complete = jsPsych.getProgressBarCompleted();
                     jsPsych.setProgressBar(proportion_complete += 0.01)
+
+                    // also upload the recording! 
+                    const audioBlob = data.response; 
+                    const formData = new FormData(); 
+                    formData.append('file', audioBlob, 'testaddingaudio.webm')
+
+                    fetch('https://api.childlanglab.com/v1/upload', { 
+                        method: 'POST',
+                        body: formData
+                    })
+                        .then(response => response.json())
+                        .then(result => {
+                            console.log("Upload success!", result); 
+                        })
+                        .catch(error => {
+                            console.error('Upload error!', error);
+                        })
                 },
                 data: {
                     sound1: jsPsych.timelineVariable('sound1'),
