@@ -479,11 +479,11 @@
 
     var timeline = [
         consent,
-        // browser_check,
-        // fullscreen_check,
-        // preload,
+        browser_check,
+        fullscreen_check,
+        preload,
         get_instructions(CONDITION_PARAMS.instructions.exposure), 
-        // exposure,
+        exposure,
         get_instructions(CONDITION_PARAMS.instructions.test),
         init_microphone, // this is a conditional function that only runs for SICR
         get_test(CONDITION),
