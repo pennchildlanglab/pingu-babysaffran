@@ -346,13 +346,15 @@
                     jsPsych.setProgressBar(proportion_complete += 0.01)
 
                     // also upload the recording to our s3 bucket!
-                    const audioBlob = data.response; 
-                    const formData = new FormData(); 
-                    formData.append('file', audioBlob, 'testaddingaudio.webm')
+                    const base64Audio = data.response; 
+                    const requestData = {file: base64Audio}
 
                     fetch('https://api.childlanglab.com/v1/upload', { 
                         method: 'POST',
-                        body: formData
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(requestData)
                     })
                         .then(response => response.json())
                         .then(result => {
