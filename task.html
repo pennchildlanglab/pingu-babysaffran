@@ -415,7 +415,7 @@
                     <p id="error-msg" style="color:red; display:none;" required>Please select an option!</p>
                 </div>
                 <p>(3) How distracted were you during the experiment?</p>
-                <div style="display: flex; align-items: center; justify-content: space-between; width: 300px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; width: 800px;">
                 <label style="font-size: 14px;">I paid close attention the whole time</label>
                 <input type="range" style="flex: 1; margin: 0 10px;" min="0" max="100">
                 <label style="font-size: 14px;">I was very distracted</label>
@@ -463,13 +463,13 @@
 
     var timeline = [
         consent,
-        // browser_check,
-        // fullscreen_check,
-        // preload,
-        // get_instructions(CONDITION_PARAMS.instructions.exposure), 
-        // exposure,
-        // get_instructions(CONDITION_PARAMS.instructions.test),
-        // get_test(CONDITION),
+        browser_check,
+        fullscreen_check,
+        preload,
+        get_instructions(CONDITION_PARAMS.instructions.exposure), 
+        exposure,
+        get_instructions(CONDITION_PARAMS.instructions.test),
+        get_test(CONDITION),
         exit_survey,
         sendData,
         thanks
