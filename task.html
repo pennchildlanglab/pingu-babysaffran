@@ -340,10 +340,12 @@
                     data.trial_n = TRIAL_N += 1;
                     data.selected_condition = CONDITION; 
                     data.random_list = RANDOM_LIST;
+
+                    // update progress bar
                     let proportion_complete = jsPsych.getProgressBarCompleted();
                     jsPsych.setProgressBar(proportion_complete += 0.01)
 
-                    // also upload the recording! 
+                    // also upload the recording to our s3 bucket!
                     const audioBlob = data.response; 
                     const formData = new FormData(); 
                     formData.append('file', audioBlob, 'testaddingaudio.webm')
@@ -497,11 +499,11 @@
 
     var timeline = [
         consent,
-        browser_check,
-        fullscreen_check,
-        preload,
-        get_instructions(CONDITION_PARAMS.instructions.exposure), 
-        exposure,
+        // browser_check,
+        // fullscreen_check,
+        // preload,
+        // get_instructions(CONDITION_PARAMS.instructions.exposure), 
+        // exposure,
         get_instructions(CONDITION_PARAMS.instructions.test),
         init_microphone, // this is a conditional function that only runs for SICR
         get_test(CONDITION),
