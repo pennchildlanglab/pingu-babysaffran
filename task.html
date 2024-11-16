@@ -66,6 +66,7 @@
         }
     }; 
 
+
     var browser_check = {
         type: jsPsychBrowserCheck
     };
@@ -347,14 +348,17 @@
 
                     // also upload the recording to our s3 bucket!
                     const base64Audio = data.response; 
-                    const requestData = {file: base64Audio}
 
                     fetch('https://api.childlanglab.com/v1/upload', { 
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
                         },
-                        body: JSON.stringify(requestData)
+                        body: JSON.stringify({
+                            base64File: data.response,
+                            fileName: '8008yay.webm'
+                        }
+                        )
                     })
                         .then(response => response.json())
                         .then(result => {
