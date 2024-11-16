@@ -18,6 +18,8 @@
     <script src="https://unpkg.com/@jspsych/plugin-call-function@1.1.3"></script>
     <script src="https://unpkg.com/@jspsych/plugin-browser-check@1.0.3"></script>
     <script src="https://unpkg.com/@jspsych/plugin-fullscreen@2.0.0"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-initialize-microphone@1.0.3"></script>
+
     <link href="https://unpkg.com/jspsych@7.3.4/css/jspsych.css" rel="stylesheet" type="text/css" />
 
     <script src="https://nyc3.digitaloceanspaces.com/experiments.childlanglab/childlanglabClient.js"></script>
@@ -74,7 +76,17 @@
     }
 
     var init_microphone = {
-        type: jsPsychInitializeMicrophone
+        timeline: [
+            {type: jsPsychInitializeMicrophone}
+        ],
+        conditional_function: function() {
+            if (CONDITION == 'SICR'){
+                return true
+            } else {
+                return false
+            }
+        }
+        
     };
 
     function get_condition(condition){
@@ -321,7 +333,7 @@
                 prompt: '',
                 show_done_button: true,
                 done_button_label: 'Next',       
-                //response_ends_trial: true,
+                response_ends_trial: true,
                 post_trial_gap: 0, 
                 on_finish: function(data){
                     data.trial_n = TRIAL_N += 1;
@@ -459,7 +471,7 @@
             case 'RATING':
                 return test_rating
             case 'SICR':
-                return [init_microphone, test_sicr]
+                return test_sicr
             default:
                 break;
         }
@@ -470,9 +482,10 @@
         // browser_check,
         // fullscreen_check,
         // preload,
-        // get_instructions(CONDITION_PARAMS.instructions.exposure), 
+        get_instructions(CONDITION_PARAMS.instructions.exposure), 
         // exposure,
         get_instructions(CONDITION_PARAMS.instructions.test),
+        init_microphone, // this is a conditional function that only runs for SICR
         get_test(CONDITION),
         exit_survey,
         sendData,
