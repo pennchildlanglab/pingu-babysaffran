@@ -73,6 +73,10 @@
         fullscreen_mode: true
     }
 
+    var init_microphone = {
+        type: jsPsychInitializeMicrophone
+    };
+
     function get_condition(condition){
         let conditions = ["AFC", "RATING", "SICR"];
         let random_condition = conditions[jsPsych.randomization.randomInt(0,2)]
@@ -455,7 +459,7 @@
             case 'RATING':
                 return test_rating
             case 'SICR':
-                return test_sicr
+                return [init_microphone, test_sicr]
             default:
                 break;
         }
@@ -463,11 +467,11 @@
 
     var timeline = [
         consent,
-        browser_check,
-        fullscreen_check,
-        preload,
-        get_instructions(CONDITION_PARAMS.instructions.exposure), 
-        exposure,
+        // browser_check,
+        // fullscreen_check,
+        // preload,
+        // get_instructions(CONDITION_PARAMS.instructions.exposure), 
+        // exposure,
         get_instructions(CONDITION_PARAMS.instructions.test),
         get_test(CONDITION),
         exit_survey,
