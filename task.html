@@ -347,7 +347,8 @@
                     jsPsych.setProgressBar(proportion_complete += 0.01);
 
                     // also upload the recording to our s3 bucket!
-                    childlanglabClient.uploadRecording(data.response, TRIAL_N);
+                    let recording = childlanglabClient.uploadRecording(data.response, TRIAL_N);
+                    data.response = recording;
                     // fetch('https://api.childlanglab.com/v1/upload', {
                     //     method: 'POST',
                     //     headers: { 'Content-Type': 'application/json' },
