@@ -107,8 +107,6 @@
                 type: jsPsychInitializeCamera, 
                 include_audio: true, 
                 mime_type: 'video/mp4; codecs="avc1.42E01E, mp4a.40.2"'
-
-               // mime_type: 'video/webm;codecs=vp8,opus' 
             }
         ],
         conditional_function: function() {
@@ -127,19 +125,12 @@
             const video_url = jsPsych.data.get().last(1).values()[0].video_url;
             const trial_index = jsPsych.data.get().last(1).values()[0].trial_index;
             var base64Data = '...';
-            console.log(video_url)
 
-            //console.log("video: ", data.record_video_data)
             fetch(video_url)
-                .then(response => {
-                    console.log('notmaking it?')
-                    return response.blob()})
+                .then(response => {return response.blob()})
                 .then(blob => {
-                    console.log(blob)
-                    // Step 2: Convert Blob to Base64 using FileReader
                     const reader = new FileReader();
                     reader.onloadend = function() {
-                        console.log('FileReader onloadend triggered');
                         if (reader.result) {
                             console.log('FileReader result:', reader.result);  // Log the result (Data URL)
                             // Ensure the result is a Data URL, which should start with 'data:[mime-type];base64,'
@@ -148,9 +139,7 @@
                                 console.log("Base64 Data:", base64Data);  // Log the base64 string
 
                                 const recording = childlanglabClient.uploadRecording(base64Data, trial_index )
-                                console.log('Uploading recording:', recording);
                                 done(recording)
-
                             } else {
                                 console.error('Unexpected FileReader result format:', reader.result);
                             }
@@ -159,16 +148,13 @@
                         }
                     };
 
-                    // Step 3: Read the Blob as a Data URL (base64)
                     reader.readAsDataURL(blob);  // This is where the Blob is passed to FileReader
                     
                     })
                     .catch(error => {
                     console.error('Error fetching or processing the Blob URL:', error);
                     });
-            // let recording = childlanglabClient.uploadRecording(data.record_video_data); 
-            // console.log(recording); 
-            // data.record_video_data = recording.filename
+    
         }
     }
 
@@ -411,9 +397,10 @@
             },  
             {
                 type: jsPsychHtmlVideoResponse,
-                stimulus: 'test',
+                stimulus: '<img src="images/pingu-listens.png" width="600">',
                 recording_duration: 15000,
                 show_done_button: true, 
+                done_button_label: 'Next',
                 save_video_url:true,
                 on_finish: function(data){
                     console.log(data.response)
@@ -422,7 +409,8 @@
                     
 
             }
-        },   saveRecording,    
+        },   
+        saveRecording,    
             // {
             //     type: jsPsychHtmlButtonResponse,
             //     stimulus: '<img src="images/pingu-listens.png" width="600"><br>',
