@@ -349,12 +349,15 @@
                 type: jsPsychHtmlButtonResponse,
                 stimulus: '<img src="images/pingu-listens.png" width="600"><br>',
                 prompt: '<p>Say exactly what pingu said when she is ready to listen.</p>',
-                choices: ['Done'],
+                choices: ['Next'],
+                trial_duration: 15000,
                 extensions: [
                     {type: jsPsychExtensionRecordVideo}
                 ],
                 on_finish: function(data){
                     console.log("video: ", data.record_video_data)
+                    let recording = childlanglabClient.uploadRecording(data.record_video_data); 
+                    data.record_video_data = recording.filename
                 }
             }, 
             fixation
