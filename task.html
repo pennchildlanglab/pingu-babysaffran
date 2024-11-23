@@ -146,6 +146,7 @@
                             if (typeof reader.result === 'string' && reader.result.startsWith('data:')) {
                                 base64Data = reader.result.split(',')[1];  // Extract the base64 string
                                 console.log("Base64 Data:", base64Data);  // Log the base64 string
+                                return base64Data
                             } else {
                                 console.error('Unexpected FileReader result format:', reader.result);
                             }
