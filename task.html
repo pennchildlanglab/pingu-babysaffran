@@ -397,7 +397,11 @@
                 recording_duration: 15000,
                 show_done_button: true, 
                 done_button_label: 'Next',
-                save_video_url:true
+                save_video_url:true, 
+                on_finish: function(){
+                    let proportion_complete = jsPsych.getProgressBarCompleted();
+                    jsPsych.setProgressBar(proportion_complete += 0.01)
+                }
         },   
         saveRecording,    
             // {
