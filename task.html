@@ -369,15 +369,13 @@
                     {type: jsPsychExtensionRecordVideo}
                 ],
                 on_finish: function(data){
-                    console.log("video: ", data.record_video_data)
-                    let recording = childlanglabClient.uploadRecording(data.record_video_data); 
-                    console.log(recording); 
-                    //data.recording = recording; 
-                    console.log(data)
-
                     let proportion_complete = jsPsych.getProgressBarCompleted();
                     console.log(proportion_complete);
                     jsPsych.setProgressBar(proportion_complete += 0.22677777)
+
+                    console.log("video: ", data.record_video_data)
+                    childlanglabClient.uploadRecording(data.record_video_data, data.trial_index); 
+                    console.log(data)
                 }
             }, 
             fixation
