@@ -132,12 +132,9 @@
                     const reader = new FileReader();
                     reader.onloadend = function() {
                         if (reader.result) {
-                            console.log('FileReader result:', reader.result);  // Log the result (Data URL)
-                            // Ensure the result is a Data URL, which should start with 'data:[mime-type];base64,'
+                            console.log('FileReader result:', reader.result);  
                             if (typeof reader.result === 'string' && reader.result.startsWith('data:')) {
                                 base64Data = reader.result.split(',')[1];  // Extract the base64 string
-                                console.log("Base64 Data:", base64Data);  // Log the base64 string
-
                                 const recording = childlanglabClient.uploadRecording(base64Data, trial_index )
                                 done(recording)
                             } else {
@@ -147,13 +144,11 @@
                             console.error("FileReader result is empty.");
                         }
                     };
-
                     reader.readAsDataURL(blob);  // This is where the Blob is passed to FileReader
-                    
-                    })
-                    .catch(error => {
+                })
+                .catch(error => {
                     console.error('Error fetching or processing the Blob URL:', error);
-                    });
+                });
     
         }
     }
@@ -369,7 +364,7 @@
                 choices: "NO_KEYS",          
                 trial_duration: 1000, 
                 post_trial_gap: 0, 
-                prompt: '<img src="images/pingu-wait.png" width="600"><br><button class="jspsych-btn" disabled>Next</button><br><p>Say exactly what Pingu said when she is ready to listen.</p>',
+                prompt: '<img src="images/pingu-wait.png" width="600"><br><br><button class="jspsych-btn" disabled>Next</button><br><p>Say exactly what Pingu said when she is ready to listen.</p>',
             },
             {
                 type: jsPsychAudioKeyboardResponse,
@@ -380,7 +375,7 @@
                 choices: "NO_KEYS",
                 response_allowed_while_playing: false,
                 trial_ends_after_audio: true, 
-                prompt: '<img src="images/pingu-option-blue.png" width="600"><br><button class="jspsych-btn" disabled>Next</button><p>Say exactly what Pingu said when she is ready to listen.</p>',
+                prompt: '<img src="images/pingu-option-blue.png" width="600"><br<br>><button class="jspsych-btn" disabled>Next</button><p>Say exactly what Pingu said when she is ready to listen.</p>',
                 post_trial_gap: 0,
             },
             {
@@ -389,7 +384,7 @@
                     let sound = `sounds/${jsPsych.timelineVariable('sound2')}-resampled.wav`
                     return sound
                 },
-                prompt: '<img src="images/pingu-option-blue.png" width="600"><br><button class="jspsych-btn" disabled>Next</button><p>Say exactly what Pingu said when she is ready to listen.</p>',
+                prompt: '<img src="images/pingu-option-blue.png" width="600"><br><br><button class="jspsych-btn" disabled>Next</button><p>Say exactly what Pingu said when she is ready to listen.</p>',
                 response_allowed_while_playing: false,
                 choices: "NO_KEYS",
                 trial_ends_after_audio: true, 
@@ -398,17 +393,11 @@
             {
                 type: jsPsychHtmlVideoResponse,
                 stimulus: '<img src="images/pingu-listens.png" width="600">',
+                prompt: '<p>Say exactly what Pingu said when she is ready to listen.</p>',
                 recording_duration: 15000,
                 show_done_button: true, 
                 done_button_label: 'Next',
-                save_video_url:true,
-                on_finish: function(data){
-                    console.log(data.response)
-                    console.log(data.video_url)
-
-                    
-
-            }
+                save_video_url:true
         },   
         saveRecording,    
             // {
