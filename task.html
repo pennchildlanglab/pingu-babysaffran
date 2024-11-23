@@ -99,7 +99,16 @@
     };
 
     var init_camera = {
-        type: jsPsychInitializeCamera
+        timeline: [
+            {type: jsPsychInitializeCamera}
+        ],
+        conditional_function: function() {
+            if (CONDITION == 'SICR'){
+                return true
+            } else {
+                return false
+            }
+        }
     }; 
 
     function get_condition(condition){
@@ -169,7 +178,7 @@
         {
                 type: jsPsychAudioSliderResponse,
                 stimulus: "sounds/silence.wav",
-                labels: ['Not at all like a penguin word', 'Definitely a penguin word'],
+                labels: ['⛔️ Not at all like a penguin word', 'Definitely a penguin word  ✅'],
                 on_load: function(){
                     let display_element = document.querySelector('#jspsych-content');
                     let image = document.createElement('img');
@@ -188,7 +197,7 @@
                     let sound = `sounds/${jsPsych.timelineVariable('sound1')}-resampled.wav`
                     return sound
                 },
-                labels: ['Not at all like a penguin word', 'Definitely a penguin word'],
+                labels: ['⛔️ Not at all like a penguin word', 'Definitely a penguin word  ✅'],
                 on_load: function(){
                     let display_element = document.querySelector('#jspsych-content');
                     let image = document.createElement('img');
