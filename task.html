@@ -160,7 +160,9 @@
                     })
                     .then(result => {
                         console.log('wht re', result); 
+                        console.log("post parse data", base64Data)
                         const recording = childlanglabClient.uploadRecording(base64Data, trial_index )
+                        console.log(recording);
                         done(recording)
                     })
                     .catch(error => {
