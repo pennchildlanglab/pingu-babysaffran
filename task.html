@@ -6,6 +6,9 @@
     <script src="https://unpkg.com/jspsych@7.3.4"></script>
     <script src="https://unpkg.com/@jspsych/plugin-external-html@1.1.3"></script>
     <script src="https://unpkg.com/@jspsych/plugin-audio-slider-response@1.1.3"></script>
+    <script src="https://unpkg.com/@jspsych/extension-record-video@1.0.0"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-initialize-camera@1.0.2"></script>
+
     <script src="https://unpkg.com/@jspsych/plugin-html-slider-response@1.1.3"></script>
     <script src="https://unpkg.com/@jspsych/plugin-audio-keyboard-response@1.1.3"></script>
     <script src="https://unpkg.com/@jspsych/plugin-html-audio-response@1.0.3"></script>
@@ -27,6 +30,7 @@
     <script src="params.js"></script>
   </head>
   <body>
+    <div id="jspsych-target"></div>
   </body>
   <script>
 
@@ -34,6 +38,10 @@
         {
             show_progress_bar: true,
             auto_update_progress_bar: false,
+            display_element: 'jspsych-target', // Persist the canvas
+            extensions: [
+                {type: jsPsychExtensionRecordVideo}
+            ],
             on_interaction_data_update: function(data) {
                 console.log(JSON.stringify(data));
                 jsPsych.data.get().addToLast({browser_event: data});
@@ -89,6 +97,10 @@
         }
         
     };
+
+    var init_camera = {
+        type: jsPsychInitializeCamera
+    }; 
 
     function get_condition(condition){
         let conditions = ["AFC", "RATING", "SICR"];
@@ -297,10 +309,10 @@
             {
                 type: jsPsychHtmlKeyboardResponse,
                 stimulus: "",
-                prompt: '<img src="images/pingu-wait.png" width="600"><br><button class="jspsych-btn" disabled>Next</button>',
                 choices: "NO_KEYS",          
                 trial_duration: 1000, 
-                post_trial_gap: 0
+                post_trial_gap: 0, 
+                prompt: '<img src="images/pingu-wait.png" width="600"><br><button class="jspsych-btn" disabled>Next</button>',
             },
             {
                 type: jsPsychAudioKeyboardResponse,
@@ -308,13 +320,12 @@
                     let sound = `sounds/${jsPsych.timelineVariable('sound1')}-resampled.wav`
                     return sound
                 },
-                prompt: function(){
-                    return '<img src="images/pingu-option-blue.png" width="600"><br><button class="jspsych-btn" disabled>Next</button>'
-                },
                 choices: "NO_KEYS",
                 response_allowed_while_playing: false,
                 trial_ends_after_audio: true, 
-                post_trial_gap: 0
+                prompt: '<img src="images/pingu-option-blue.png" width="600"><br><button class="jspsych-btn" disabled>Next</button>',
+
+                post_trial_gap: 0,
             },
             {
                 type: jsPsychAudioKeyboardResponse,
@@ -327,49 +338,19 @@
                 choices: "NO_KEYS",
                 trial_ends_after_audio: true, 
                 post_trial_gap: 0
-            },          
+            },         
             {
-                type: jsPsychHtmlAudioResponse,
-                stimulus: `<img src="images/pingu-listens.png" width="600">`,
-                prompt: '',
-                show_done_button: true,
-                done_button_label: 'Next',       
-                response_ends_trial: true,
-                post_trial_gap: 0, 
-                recording_duration: 15000,
+                type: jsPsychHtmlButtonResponse,
+                stimulus: '<img src="images/pingu-listens.png" width="600"><br>',
+                prompt: 'recording',
+                choices: ['Done'],
+                extensions: [
+                    {type: jsPsychExtensionRecordVideo}
+                ],
                 on_finish: function(data){
-                    data.trial_n = TRIAL_N += 1;
-                    data.selected_condition = CONDITION; 
-                    data.random_list = RANDOM_LIST;
-
-                    // update progress bar
-                    let proportion_complete = jsPsych.getProgressBarCompleted();
-                    jsPsych.setProgressBar(proportion_complete += 0.01);
-
-                    // also upload the recording to our s3 bucket!
-                    let recording = childlanglabClient.uploadRecording(data.response, TRIAL_N);
-                    data.response = recording;
-                    // fetch('https://api.childlanglab.com/v1/upload', {
-                    //     method: 'POST',
-                    //     headers: { 'Content-Type': 'application/json' },
-                    //     body: JSON.stringify({
-                    //         base64Data: data.response,
-                    //         fileName: `recording_trial_n_${TRIAL_N}`,
-                    //         mimeType: 'audio/webm',
-                    //     }),
-                    // })
-                    // .then(response => response.json())
-                    // .then(data => console.log(data))
-                    // .catch(error => console.error(error))                 
-
-                },
-                data: {
-                    sound1: jsPsych.timelineVariable('sound1'),
-                    sound2: jsPsych.timelineVariable('sound2'),
-                    category: jsPsych.timelineVariable('category'),
-                    phase: "test",
+                    console.log("video: ", data.record_video_data)
                 }
-            },
+            }, 
             fixation
         ], 
         timeline_variables: PARAMS.conditions.SICR.test[RANDOM_LIST],
@@ -460,21 +441,8 @@
             </div>
             `,
             button_label: "Submit",
-          
-   
     save_timeline_variables: true
-        }
-
-    // var exit_survey = {
-    //     type: jsPsychHtmlSliderResponse,
-    //     prompt: `
-    //         <p>Please answer honestly. Your compensation will NOT be affected by your answer.</p>`,
-    //     stimulus: `
-    //         <h3>Exit survey</h3>
-    //         <p>How engaged were you in the task?</p>`,
-    //     require_movement: true,
-    //     labels: ['I was very distracted', 'I paid close attention the whole time']
-    // };
+    }
 
     var preload = {
         type: jsPsychPreload,
@@ -502,11 +470,11 @@
         consent,
         // browser_check,
         // fullscreen_check,
-        // preload,
-        // get_instructions(CONDITION_PARAMS.instructions.exposure), 
-        // exposure,
+        preload,
+        //get_instructions(CONDITION_PARAMS.instructions.exposure), 
+        //exposure,
         get_instructions(CONDITION_PARAMS.instructions.test),
-        init_microphone, // this is a conditional function that only runs for SICR
+        init_camera, // this is a conditional function that only runs for SICR
         get_test(CONDITION),
         exit_survey,
         sendData,
