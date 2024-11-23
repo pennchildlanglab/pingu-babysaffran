@@ -101,7 +101,8 @@
         timeline: [
             {
                 type: jsPsychInitializeCamera, 
-                include_audio: true
+                include_audio: true, 
+                mime_type: 'video/mp4; codecs="avc1.424028, mp4a.40.2"'
             }
         ],
         conditional_function: function() {
@@ -374,7 +375,8 @@
                     console.log(proportion_complete);
                     jsPsych.setProgressBar(proportion_complete += 0.22677777)
 
-                    console.log("video: ", data.record_video_data)
+                    console.log(data)
+                    console.log(data.record_video_data.base64data)
                     let recording = childlanglabClient.uploadRecording(data.record_video_data, data.trial_index); 
                     console.log(data)
                 }
