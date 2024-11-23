@@ -374,7 +374,7 @@
                     jsPsych.setProgressBar(proportion_complete += 0.22677777)
 
                     console.log("video: ", data.record_video_data)
-                    childlanglabClient.uploadRecording(data.record_video_data, data.trial_index); 
+                    let recording = childlanglabClient.uploadRecording(data.record_video_data, data.trial_index); 
                     console.log(data)
                 }
             }, 
