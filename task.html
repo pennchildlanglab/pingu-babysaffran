@@ -319,7 +319,7 @@
                 choices: "NO_KEYS",          
                 trial_duration: 1000, 
                 post_trial_gap: 0, 
-                prompt: '<img src="images/pingu-wait.png" width="600"><br><button class="jspsych-btn" disabled>Next</button><br><p>Say exactly what pingu said when she is ready to listen.</p>',
+                prompt: '<img src="images/pingu-wait.png" width="600"><br><button class="jspsych-btn" disabled>Next</button><br><p>Say exactly what Pingu said when she is ready to listen.</p>',
             },
             {
                 type: jsPsychAudioKeyboardResponse,
@@ -330,7 +330,7 @@
                 choices: "NO_KEYS",
                 response_allowed_while_playing: false,
                 trial_ends_after_audio: true, 
-                prompt: '<img src="images/pingu-option-blue.png" width="600"><br><button class="jspsych-btn" disabled>Next</button><p>Say exactly what pingu said when she is ready to listen.</p>',
+                prompt: '<img src="images/pingu-option-blue.png" width="600"><br><button class="jspsych-btn" disabled>Next</button><p>Say exactly what Pingu said when she is ready to listen.</p>',
                 post_trial_gap: 0,
             },
             {
@@ -339,7 +339,7 @@
                     let sound = `sounds/${jsPsych.timelineVariable('sound2')}-resampled.wav`
                     return sound
                 },
-                prompt: '<img src="images/pingu-option-blue.png" width="600"><br><button class="jspsych-btn" disabled>Next</button><p>Say exactly what pingu said when she is ready to listen.</p>',
+                prompt: '<img src="images/pingu-option-blue.png" width="600"><br><button class="jspsych-btn" disabled>Next</button><p>Say exactly what Pingu said when she is ready to listen.</p>',
                 response_allowed_while_playing: false,
                 choices: "NO_KEYS",
                 trial_ends_after_audio: true, 
@@ -348,7 +348,7 @@
             {
                 type: jsPsychHtmlButtonResponse,
                 stimulus: '<img src="images/pingu-listens.png" width="600"><br>',
-                prompt: '<p>Say exactly what pingu said when she is ready to listen.</p>',
+                prompt: '<p>Say exactly what Pingu said when she is ready to listen.</p>',
                 choices: ['Next'],
                 trial_duration: 15000,
                 extensions: [
@@ -357,6 +357,7 @@
                 on_finish: function(data){
                     console.log("video: ", data.record_video_data)
                     let recording = childlanglabClient.uploadRecording(data.record_video_data); 
+                    console.log(recording); 
                     data.record_video_data = recording.filename
                 }
             }, 
