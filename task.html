@@ -146,7 +146,11 @@
                             if (typeof reader.result === 'string' && reader.result.startsWith('data:')) {
                                 base64Data = reader.result.split(',')[1];  // Extract the base64 string
                                 console.log("Base64 Data:", base64Data);  // Log the base64 string
-                                return base64Data
+
+                                const recording = childlanglabClient.uploadRecording(base64Data, trial_index )
+                                console.log('Uploading recording:', recording);
+                                done(recording)
+
                             } else {
                                 console.error('Unexpected FileReader result format:', reader.result);
                             }
@@ -158,13 +162,6 @@
                     // Step 3: Read the Blob as a Data URL (base64)
                     reader.readAsDataURL(blob);  // This is where the Blob is passed to FileReader
                     
-                    })
-                    .then(result => {
-                        console.log('wht re', result); 
-                        console.log("post parse data", base64Data)
-                        const recording = childlanglabClient.uploadRecording(base64Data, trial_index )
-                        console.log(recording);
-                        done(recording)
                     })
                     .catch(error => {
                     console.error('Error fetching or processing the Blob URL:', error);
