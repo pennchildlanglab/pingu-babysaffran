@@ -98,7 +98,10 @@
 
     var init_camera = {
         timeline: [
-            {type: jsPsychInitializeCamera}
+            {
+                type: jsPsychInitializeCamera, 
+                include_audio: true
+            }
         ],
         conditional_function: function() {
             if (CONDITION == 'SICR'){
@@ -108,6 +111,17 @@
             }
         }
     }; 
+
+    // var saveRecording = {
+    //     type: jsPsychCallFunction, 
+    //     async: true, 
+    //     func: function(done){
+    //         console.log("video: ", data.record_video_data)
+    //         let recording = childlanglabClient.uploadRecording(data.record_video_data); 
+    //         console.log(recording); 
+    //         data.record_video_data = recording.filename
+    //     }
+    // }
 
     function get_condition(condition){
         let conditions = ["AFC", "RATING", "SICR"];
@@ -358,7 +372,12 @@
                     console.log("video: ", data.record_video_data)
                     let recording = childlanglabClient.uploadRecording(data.record_video_data); 
                     console.log(recording); 
-                    data.record_video_data = recording.filename
+                    data.recording = recording; 
+                    console.log(data)
+
+                    let proportion_complete = jsPsych.getProgressBarCompleted();
+                    console.log(proportion_complete);
+                    jsPsych.setProgressBar(proportion_complete += 0.22677777)
                 }
             }, 
             fixation
