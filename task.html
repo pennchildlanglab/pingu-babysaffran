@@ -136,6 +136,7 @@
                             if (typeof reader.result === 'string' && reader.result.startsWith('data:')) {
                                 base64Data = reader.result.split(',')[1];  // Extract the base64 string
                                 const recording = childlanglabClient.uploadRecording(base64Data, trial_index )
+                                console.log(recording)
                                 done(recording)
                             } else {
                                 console.error('Unexpected FileReader result format:', reader.result);
@@ -389,7 +390,19 @@
                 choices: "NO_KEYS",
                 trial_ends_after_audio: true, 
                 post_trial_gap: 0
-            },  
+            },
+            {
+                type: jsPsychAudioKeyboardResponse,
+                stimulus: function(){
+                    let sound = `sounds/${jsPsych.timelineVariable('sound3')}-resampled.wav`
+                    return sound
+                },
+                prompt: '<img src="images/pingu-option-blue.png" width="600"><br><br><button class="jspsych-btn" disabled>Next</button>',
+                response_allowed_while_playing: false,
+                choices: "NO_KEYS",
+                trial_ends_after_audio: true, 
+                post_trial_gap: 0
+            },    
             {
                 type: jsPsychHtmlVideoResponse,
                 stimulus: '<img src="images/pingu-listens.png" width="600">',
@@ -544,11 +557,11 @@
 
     var timeline = [
         consent,
-        browser_check,
-        fullscreen_check,
+        //browser_check,
+        //fullscreen_check,
         preload,
-        get_instructions(CONDITION_PARAMS.instructions.exposure), 
-        exposure,
+        // get_instructions(CONDITION_PARAMS.instructions.exposure), 
+        // exposure,
         get_instructions(CONDITION_PARAMS.instructions.test),
         init_camera, // this is a conditional function that only runs for SICR
         init_microphone,
