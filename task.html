@@ -50,7 +50,8 @@
                 jsPsych.data.get().addToLast({browser_event: data});
             },
             on_finish: function() {
-                jsPsych.data.displayData();
+                //jsPsych.data.displayData();
+                window.location = "https://app.prolific.co/submissions/complete?cc=CELMED4M"
             }
         }
     );
@@ -521,11 +522,11 @@
                     <label><input type="radio" name="similar_experiment" value="not sure" required> not sure</label><br>
                     <p id="error-msg" style="color:red; display:none;" required>Please select an option!</p>
                 </div>
-                <p>(3) How distracted were you during the experiment?</p>
+                <p>(3) How attentive were you during the experiment?</p>
                 <div style="display: flex; align-items: center; justify-content: space-between; width: 800px;">
-                <label style="font-size: 14px;">I paid close attention the whole time</label>
-                <input type="range" style="flex: 1; margin: 0 10px;" min="0" max="100">
                 <label style="font-size: 14px;">I was very distracted</label>
+                <input type="range" style="flex: 1; margin: 0 10px;" min="0" max="100">
+                <label style="font-size: 14px;">I paid close attention the whole time</label>
                 </div>
             </div>
             `,
