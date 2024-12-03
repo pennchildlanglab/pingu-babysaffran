@@ -493,7 +493,7 @@
                     `<button class="jspsych-btn"> <img src=%choice% width="400"></button>`
                 ], 
                 post_trial_gap: 1000,
-                on_finish: function(){
+                on_finish: function(data){
                     let proportion_complete = jsPsych.getProgressBarCompleted();
                     console.log(proportion_complete);
                     jsPsych.setProgressBar(proportion_complete += 0.22677777)
