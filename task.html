@@ -83,6 +83,20 @@
         type: jsPsychBrowserCheck
     };
 
+    const sound_check = {
+        type: jsPsychAudioButtonResponse,
+        stimulus: `${host}jingles_SAX10.mp3`,
+        choices: [0,1,2,3,4,5],
+        prompt: "<p>How many notes did you hear?</p>"
+    }
+
+    const loop_sound_check = {
+      timeline: [sound_check],
+      loop_function: function(data){
+        return data.values()[0].response != 4 ? true : false;
+      }
+    }
+
     var fullscreen_check = {
         type: jsPsychFullscreen,
         fullscreen_mode: true
@@ -561,6 +575,7 @@
         browser_check,
         fullscreen_check,
         preload,
+        loop_sound_check,
         get_instructions(CONDITION_PARAMS.instructions.exposure), 
         exposure,
         get_instructions(CONDITION_PARAMS.instructions.test),
