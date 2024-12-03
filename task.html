@@ -497,6 +497,11 @@
                     let proportion_complete = jsPsych.getProgressBarCompleted();
                     console.log(proportion_complete);
                     jsPsych.setProgressBar(proportion_complete += 0.22677777)
+                    data.selected_condition = CONDITION; 
+                    data.random_list = RANDOM_LIST;
+                    data.choices = this.choices;
+                    data.button_pressed = this.choices[data.response]; 
+                    data.choice_comprehension = this.choices[data.response];
                 }
 
             }
