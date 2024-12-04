@@ -425,9 +425,18 @@
                 show_done_button: true, 
                 done_button_label: 'Next',
                 save_video_url:true, 
-                on_finish: function(){
+                on_finish: function(data){
                     let proportion_complete = jsPsych.getProgressBarCompleted();
                     jsPsych.setProgressBar(proportion_complete += 0.01)
+                    data.selected_condition = CONDITION; 
+                    data.random_list = RANDOM_LIST;
+                }, 
+                data: {
+                    sound1: jsPsych.timelineVariable('sound1'),
+                    sound2: jsPsych.timelineVariable('sound2'),
+                    sound3: jsPsych.timelineVariable('sound3'),
+                    category1: jsPsych.timelineVariable('category'),
+                    phase: "test",
                 }
         },   
         saveRecording,    
