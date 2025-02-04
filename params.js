@@ -266,6 +266,83 @@ var PARAMS = {
           { sound1: "golatu", sound2: "tibudo", sound3: "daropi", category: "part-word" }
       ]
       }
+    }, 
+    SICR2: {
+      name: "SICR2",
+      instructions: {
+        exposure: "Today we are going to watch some fun videos and play a game. In the videos, you are going to see Pingu, the little penguin, talking to her family and friends in the penguin language. Watch as Pingu goes about her day and listen carefully to the penguin language. Between videos, you will be asked comprehension questions about what Pingu was doing, so make sure that you are paying attention. Click continue to start watching the video.",
+        test: "Great job! Now you and Pingu are going to play a game. In this game, Pingu is going to say some words. After she finishes speaking, your job is to say exactly what Pingu said out loud. To play this game, listen to Pingu very carefully. After Pingu is done talking, say exactly what she said when you see that she is ready to listen. Are you ready to play? Click continue to start.", 
+      },
+      test: {
+        list1: [
+          { sound1: "daropi", sound2: "pabiku", category: "part-word" },
+          { sound1: "budopa", sound2: "pigola", category: "word" },
+          { sound1: "daropi", sound2: "tibudo", category: "part-word" },
+          { sound1: "pigola", sound2: "tudaro", category: "word" },
+          { sound1: "daropi", sound2: "tibudo", category: "part-word" },
+          { sound1: "golatu", sound2: "tibudo", category: "part-word" },
+          { sound1: "pigola", sound2: "bikuti", category: "word" },
+          { sound1: "tudaro", sound2: "budopa", category: "word" },
+          { sound1: "tibudo", sound2: "golatu", category: "part-word" },
+          { sound1: "bikuti", sound2: "budopa", category: "word" },
+          { sound1: "pabiku", sound2: "golatu", category: "part-word" },
+          { sound1: "tudaro", sound2: "pigola", category: "word" },
+          { sound1: "bikuti", sound2: "tudaro", category: "word" },
+          { sound1: "golatu", sound2: "daropi", category: "part-word" },
+          { sound1: "budopa", sound2: "bikuti", category: "word" },
+          { sound1: "pabiku", sound2: "daropi", category: "part-word" },
+          { sound1: "budopa", sound2: "pigola", category: "word" },
+          { sound1: "golatu", sound2: "daropi", category: "part-word" },
+          { sound1: "tibudo", sound2: "pabiku", category: "part-word" },
+          { sound1: "bikuti", sound2: "tudaro", category: "word" },
+          { sound1: "pigola", sound2: "bikuti", category: "word" },
+          { sound1: "daropi", sound2: "tibudo", category: "part-word" },
+          { sound1: "pabiku", sound2: "golatu", category: "part-word" },
+          { sound1: "bikuti", sound2: "budopa", category: "word" },
+          { sound1: "golatu", sound2: "pabiku", category: "part-word" },
+          { sound1: "tibudo", sound2: "golatu", category: "part-word" },
+          { sound1: "pigola", sound2: "tudaro", category: "word" },
+          { sound1: "budopa", sound2: "bikuti", category: "word" },
+          { sound1: "pabiku", sound2: "daropi", category: "part-word" },
+          { sound1: "tudaro", sound2: "budopa", category: "word" },
+          { sound1: "tibudo", sound2: "pabiku", category: "part-word" },
+          { sound1: "tudaro", sound2: "pigola", category: "word" }
+          ],
+        list2: [
+          { sound1: "budopa", sound2: "pigola", category: "word" },
+          { sound1: "bikuti", sound2: "tudaro", category: "word" },
+          { sound1: "golatu", sound2: "daropi", category: "part-word" },
+          { sound1: "daropi", sound2: "pabiku", category: "part-word" },
+          { sound1: "pigola", sound2: "tudaro", category: "word" },
+          { sound1: "pigola", sound2: "bikuti", category: "word" },
+          { sound1: "golatu", sound2: "tibudo", category: "part-word" },
+          { sound1: "pigola", sound2: "tudaro", category: "word" },
+          { sound1: "tibudo", sound2: "pabiku", category: "part-word" },
+          { sound1: "tudaro", sound2: "pigola", category: "word" },
+          { sound1: "daropi", sound2: "tibudo", category: "part-word" },
+          { sound1: "tudaro", sound2: "budopa", category: "word" },
+          { sound1: "pabiku", sound2: "golatu", category: "part-word" },
+          { sound1: "tudaro", sound2: "budopa", category: "word" },
+          { sound1: "golatu", sound2: "pabiku", category: "part-word" },
+          { sound1: "pabiku", sound2: "golatu", category: "part-word" },
+          { sound1: "bikuti", sound2: "tudaro", category: "word" },
+          { sound1: "bikuti", sound2: "budopa", category: "word" },
+          { sound1: "tibudo", sound2: "golatu", category: "part-word" },
+          { sound1: "golatu", sound2: "daropi", category: "part-word" },
+          { sound1: "bikuti", sound2: "budopa", category: "word" },
+          { sound1: "tibudo", sound2: "golatu", category: "part-word" },
+          { sound1: "daropi", sound2: "tibudo", category: "part-word" },
+          { sound1: "pigola", sound2: "bikuti", category: "word" },
+          { sound1: "pabiku", sound2: "daropi", category: "part-word" },
+          { sound1: "tibudo", sound2: "pabiku", category: "part-word" },
+          { sound1: "tudaro", sound2: "pigola", category: "word" },
+          { sound1: "pabiku", sound2: "daropi", category: "part-word" },
+          { sound1: "budopa", sound2: "bikuti", category: "word" },
+          { sound1: "daropi", sound2: "tibudo", category: "part-word" },
+          { sound1: "budopa", sound2: "pigola", category: "word" },
+          { sound1: "budopa", sound2: "bikuti", category: "word" }
+          ]
+      }
     }
   }
 }
