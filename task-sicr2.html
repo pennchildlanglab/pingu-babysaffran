@@ -107,7 +107,7 @@
             {type: jsPsychInitializeMicrophone}
         ],
         conditional_function: function() {
-            if (CONDITION == 'SICR'){
+            if (CONDITION.startsWith('SICR')){
                 return true
             } else {
                 return false
@@ -125,7 +125,7 @@
             }
         ],
         conditional_function: function() {
-            if (CONDITION == 'SICR'){
+            if (CONDITION.startsWith('SICR')){
                 return true
             } else {
                 return false
